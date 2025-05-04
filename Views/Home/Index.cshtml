@@ -9,11 +9,11 @@
                 <div class="row mb-3">
                     <label for="category" class="col-sm-2 col-form-label">類別</label>
                     <div class="col-sm-10">
-                        <select id="category" name="Category" class="form-select" required>
+
                         <select id="category" name="Category" class="form-select" >
                             <option value="" selected>請選擇</option>
-                            <option>支出</option>
-                            <option>收入</option>
+                            <option value="0">支出</option>
+                            <option value="1">收入</option>
                         </select>
                     </div>
                 </div>
@@ -63,7 +63,7 @@
                         {
                             <tr>
                                 <td>@item.Id</td>
-                                <td>@item.Category</td>
+                                <td>@(item.Category == 0 ? "支出" : "收入")</td>
                                 <td>@item.Money</td>
                                 <td>@item.Date.ToString("yyyy-MM-dd")</td>
                                 <td>@item.Description</td>

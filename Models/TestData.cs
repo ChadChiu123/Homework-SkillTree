@@ -1,33 +1,30 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Homework.Models
 {
     /// <summary>
     /// 建立測試資料的類別
     /// </summary>
+    [Table("AccountBook")] // 對應資料表名稱
     public class TestData
     {
-        public int Id { get; set; } // 流水號
-        /// <summary>
-        /// 類別 (支出/收入)
-        /// </summary>
-        [Required]
-        public string Category { get; set; }
-        /// <summary>
-        /// 金額
-        /// </summary>
-        [Required]
-        [Range(1, int.MaxValue, ErrorMessage = "金額必須大於 0")]
+        [Key] // 主鍵
+        public Guid Id { get; set; }
+
+        [Column("Categoryyy")]
+        [Range(0, 1, ErrorMessage = "Category 必須是 0（支出）或 1（收入）。")]
+        public required int Category { get; set; } // 1=收入, 0=支出
+
+        [Column("Amounttt")]
+        [Range(1, int.MaxValue, ErrorMessage = "金額必須大於 0。")]
         public int Money { get; set; }
-        /// <summary>
-        /// 日期
-        /// </summary>
-        [Required]
-        [DataType(DataType.Date)]
+
+        [Column("Dateee")]
         public DateTime Date { get; set; }
-        /// <summary>
-        /// 備註
-        /// </summary>
+
+        [Column("Remarkkk")]
+        [StringLength(500, ErrorMessage = "備註不能超過 500 個字元。")]
         public string Description { get; set; }
     }
 }

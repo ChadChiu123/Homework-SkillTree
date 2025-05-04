@@ -1,19 +1,38 @@
+
+using Homework.Data;
+using Homework_SkillTree.Services;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 
 // 加入 MVC 服務
 builder.Services.AddControllersWithViews();
 
-var app = builder.Build();
 
+
+// 註冊 MyBlogContext
+builder.Services.AddDbContext<MyBlogContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("SkillTreeDatabase")));
+
+// 註冊 TestDataService API
+/builder.Services.AddScoped<TestDataService>();
+
+var app = builder.Build();
 // 中介軟體管線配置
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
+app.MapControllers();
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Blog}/{action=Read}/{id?}");
 
 app.UseHttpsRedirection();
+
 app.UseStaticFiles();
 
 app.UseRouting();
